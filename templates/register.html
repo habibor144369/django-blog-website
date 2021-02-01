@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+Please register for new account
+{% endblock %}
+
+{% block stylesheet %}
+<style>
+    .well {
+        min-height: 20px;
+        padding: 19px 100px;
+        font-size: 22px;
+        color: green;
+    }
+    #fh5co-header #fh5co-logo a {
+  color: #007336;
+}
+    
+</style>
+{% endblock %}
+
+{% block profile %}
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <table class="table-primary">
+            <tr>
+                <th class="well">User Rgistration From Here</th>
+            </tr>
+        </table>
+    </div> <br>
+
+    <div class="container">
+        <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <button class="btn btn-info">Register</button>
+        </form>
+    </div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

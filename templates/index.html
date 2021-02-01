@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Welcome to our django blog{% endblock %}
+{% block stylesheet %}
+<style>
+#fh5co-header #fh5co-logo a {
+  color: #007336;
+}
+
+.fh5co-post-entry article h2 {
+    font-family: "Playfair Display", times, serif;
+    font-size: 34px;
+    color: #000;
+    margin-bottom: 30px;
+    text-align: left;
+    font-size: 24px;
+}
+h4, .h4 {
+    font-size: 18px;
+    text-align: left;
+}
+.fh5co-post-entry article .fh5co-meta.fh5co-date {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: left;
+}
+.fh5co-post-entry article .fh5co-meta {
+    font-size: 16px;
+    font-family: "Roboto", arial, sans-serif;
+    color: #999999;
+    margin-bottom: 20px;
+    display: block;
+    text-align: left;
+}
+.fh5co-post-entry article {
+    text-align: center;
+    float: left;
+    margin-bottom: 110px;
+    padding-left: 3em;
+    padding-right: 3em;
+    line-height: 15px;
+}
+.fh5co-post-entry article h2 a {
+    color: #018F98;
+}
+
+#fh5co-offcanvas .heading {
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #035e9e;
+    margin-bottom: 30px;
+    font-family: 'Roboto';
+}
+#fh5co-offcanvas .fh5co-menu {
+    float: initial;
+}
+.form-control {
+    box-shadow: none;
+    background: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    height: 54px;
+    font-size: 18px;
+    font-weight: 300;
+    width: 400px;
+}
+.hello {
+    background-color: #d9edf7;
+    color: #31708f;
+    margi
+}
+.hello2{
+    margin-top:210px;
+}
+.fh5co-post-entry article {
+    text-align: center;
+    float: left;
+    margin-bottom: 110px;
+    padding-left: 3em;
+    padding-right: 3em;
+    line-height: 15px;
+    margin-top: 50px;
+}
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+    margin-top: 6px;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+	<!-- END #fh5co-header -->
+    {% comment %} {% if messages %}
+        <div class="messages text-center">
+            {% for message in messages %}
+            <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %} {% endcomment %}
+
+<div class="container">
+    {% if messages %}
+    <div class="messages text-center">
+        {% for message in messages %}
+            <div class=" hello2 alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="hello" {% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }} </span>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+    <div class="allpost">
+    {% for p in post %}
+        <article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+            <figure>
+                <a href="{{ p.get_single_url }}"><img src="{{ p.image.url }}" alt="Image" class="img-responsive"></a>
+            </figure>
+            <span class="fh5co-meta"><a href="{% url 'blog:topic' name=p.category.name %}">{{ p.category.name }}</a></span>
+            <h2 class="fh5co-article-title"><a href="{{ p.get_single_url }}">{{ p.title }}</a></h2>
+            <h4><a href="{{ p.get_author_url }}">{{ p.article_author.name.get_full_name }}</a></h4>
+            <span class="fh5co-meta fh5co-date">{{ p.posted_on }}</span>
+        </article>
+    {% endfor %}
+    <div class="clear-fix"></div>
+    </div>
+
+
+    
+    <div class="pagination">
+    <span class="step-links">
+        {% if post.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ post.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ post.number }} of {{ post.paginator.num_pages }}.
+        </span>
+
+        {% if post.has_next %}
+            <a href="?page={{ post.next_page_number }}">next</a>
+            <a href="?page={{ post.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

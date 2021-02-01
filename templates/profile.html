@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}
+    Author || {{ auth.name.get_full_name }}
+{% endblock %}
+{% block stylesheet %}
+<style>
+    #fh5co-header #fh5co-logo a {
+  color: #007336;
+}
+.well h2{
+    color: blue;
+}
+
+
+.fh5co-post-entry article h2 {
+    font-family: "Playfair Display", times, serif;
+    font-size: 34px;
+    color: #000;
+    margin-bottom: 30px;
+    text-align: left;
+    font-size: 24px;
+}
+h4, .h4 {
+    font-size: 18px;
+    text-align: left;
+}
+.fh5co-post-entry article .fh5co-meta.fh5co-date {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: left;
+}
+.fh5co-post-entry article .fh5co-meta {
+    font-size: 16px;
+    font-family: "Roboto", arial, sans-serif;
+    color: #999999;
+    margin-bottom: 20px;
+    display: block;
+    text-align: left;
+}
+.fh5co-post-entry article {
+    text-align: center;
+    float: left;
+    margin-bottom: 110px;
+    padding-left: 3em;
+    padding-right: 3em;
+    line-height: 15px;
+}
+.fh5co-post-entry article h2 a {
+    color: #018F98;
+}
+</style>
+
+{% endblock %}
+{% block profile %}
+    <div class="fh5co-bio">
+			<figure>
+				<img src="{{ auth.profile_picture.url }}" alt="Free HTML5 Bootstrap Template" class="img-responsive">
+			</figure>
+			<h3 class="heading">About Me</h3>
+			<h2>{{ auth.name.get_full_name }}</h2>
+			<p>{{ auth.details|safe }}</p>
+			<ul class="fh5co-social">
+				<li><a href="#"><i class="icon-twitter"></i></a></li>
+				<li><a href="#"><i class="icon-facebook"></i></a></li>
+				<li><a href="#"><i class="icon-instagram"></i></a></li>
+			</ul>
+		</div>
+{% endblock %}
+{% block content %}
+    <div class="well text-center">
+        <h2>Author: {{ auth.name.get_full_name }}</h2>
+    </div>
+    {% for p in post %}
+        <article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+            <figure>
+                <a href="{% url 'blog:single_post' id=p.id %}"><img src="{{ p.image.url }}" alt="Image" class="img-responsive"></a>
+            </figure>
+            <span class="fh5co-meta"><a href="{% url 'blog:topic' name=p.category.name %}">{{ p.category }}</a></span>
+            <h2 class="fh5co-article-title"><a href="{% url 'blog:single_post' id=p.id %}">{{ p.title }}</a></h2>
+            <span class="fh5co-meta fh5co-date">{{ p.posted_on }}</span>
+        </article>
+    {% endfor %}
+
+
+        <div class="container-fluid">
+	<div class="pagination">
+		<span class="step-links">
+			{% if post.has_previous %}
+				<a href="?page=1">&laquo; first</a>
+				<a href="?page={{ post.previous_page_number }}">previous</a>
+			{% endif %}
+
+			<span class="current">
+				Page {{ post.number }} of {{ post.paginator.num_pages }}.
+			</span>
+
+			{% if post.has_next %}
+				<a href="?page={{ post.next_page_number }}">next</a>
+				<a href="?page={{ post.paginator.num_pages }}">last &raquo;</a>
+			{% endif %}
+		</span>
+	</div>
+</div>
+
+{% endblock %}
+{% block script %}
+
+{% endblock %}

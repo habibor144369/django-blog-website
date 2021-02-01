@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ user.name.get_full_name }}
+{% endblock %}
+{% block stylesheet %}
+<style>
+ #fh5co-header #fh5co-logo a {
+  color: #007336;
+}
+.hello2{
+    margin-top:210px;
+}
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+    margin-top: 6px;
+}
+</style>
+{% endblock %}
+
+
+{% block profile %}
+    <div class="fh5co-bio">
+			<figure>
+				<img src="{{ user.profile_picture.url }}" alt="Free HTML5 Bootstrap Template" class="img-responsive">
+			</figure>
+			<h3 class="heading">About Me</h3>
+			<h2>{{ user.name.get_full_name }}</h2>
+            <h4>{{ user.name.email }}</h4>
+			<p>{{ user.details|safe }}</p>
+			<ul class="fh5co-social">
+				<li><a href="#"><i class="icon-twitter"></i></a></li>
+				<li><a href="#"><i class="icon-facebook"></i></a></li>
+				<li><a href="#"><i class="icon-instagram"></i></a></li>
+			</ul>
+		</div>
+{% endblock %}
+
+{% block content %}
+    {% comment %} {% if messages %}
+    <div class="messages text-center">
+        {% for message in messages %}
+        <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %} {% endcomment %}
+
+
+    <div class="container">
+    {% if messages %}
+    <div class="messages text-center">
+        {% for message in messages %}
+            <div class=" hello2 alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="hello" {% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }} </span>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+
+    <div class="container">
+        <a href="{% url 'blog:create' %}" class="btn btn-success pull pull-right">Add new article</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Title</td>
+            <td>Posted On</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in post %}
+            <tr>
+                <td><a href="{% url 'blog:single_post' id=p.id %}">{{ p.title }}</a></td>
+                <td>{{ p.posted_on }}</td>
+                <td><a href="{% url 'blog:delete' pid=p.id %}">Delete</a>||<a href="{% url 'blog:update' pid=p.id %}">Edit</a></td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+</table>
+    </div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

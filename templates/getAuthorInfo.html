@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}
+Create author profile
+{% endblock %}
+{% block stylesheet %}
+    <style>
+        #fh5co-header #fh5co-logo a {
+  color: #007336;
+}
+    </style>
+{% endblock %}
+{% block profile %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button class="btn btn-primary">Create author</button>
+    </form>
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

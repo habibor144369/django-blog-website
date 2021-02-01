@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}
+All topics
+{% endblock %}
+{% block stylesheet %}
+<style>
+#fh5co-header #fh5co-logo a {
+  color: #007336;
+}
+</style>
+{% endblock %}
+{% block profile %}
+{% endblock %}
+{% block content %}
+
+ {% if messages %}
+    <div class="messages text-center">
+        {% for message in messages %}
+        <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+ {% endif %}
+
+<div class="container">
+    {% if request.user.is_authenticated %}
+        {% if request.user.is_staff or request.user.is_superuser %}
+            <a href="{% url 'blog:createTopic' %}" class="btn btn-success pull pull-right">Add new category</a>
+        {% endif %}
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Topics</td>
+
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_staff or request.user.is_superuser %}
+                    <td>Action</td>
+                {% endif %}
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for t in topic %}
+            <tr>
+                <td><a href="{% url 'blog:topic' name=t.name %}">{{ t.name }}</a></td>
+
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_staff or request.user.is_superuser %}
+                        <td><a href="">Delete</a>||<a href="">Edit</a></td>
+                    {% endif %}
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+        </tbody>
+</table>
+    </div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

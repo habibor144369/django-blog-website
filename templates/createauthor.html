@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}
+Create author profile
+{% endblock %}
+{% block stylesheet %}
+    <style>
+    .well{
+        color: green;
+        padding: 15px;
+    }
+    #fh5co-header #fh5co-logo a {
+  color: #007336;
+}
+    </style>
+{% endblock %}
+{% block profile %}
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <table>
+            <tr>
+                <th class="well">Please Create To You Author Account And Add To New Article to You! </th>
+            </tr>
+        </table>
+    </div> <br> <br>
+<div class="container">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button class="btn btn-success">Create author</button>
+    </form>
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}
