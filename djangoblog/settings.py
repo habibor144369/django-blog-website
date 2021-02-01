@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 from django.contrib.messages import constants as messages
 import os
+import django_heroku
+import dj_database_url
+from decouple import config
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -47,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'djangoblog.urls'
@@ -117,6 +122,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MESSAGE_TAGS = {
     messages.INFO: 'alert alert-info',
     messages.SUCCESS: 'alert alert-success',
@@ -124,3 +132,6 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert alert-danger',
     messages.DEBUG: 'alert alert-info',
 }
+
+
+django_heroku.settings(locals())
